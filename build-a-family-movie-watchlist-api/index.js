@@ -1,20 +1,13 @@
-import express from "express";
-import helmet from "helmet";
-
-import watchlistRoutes from "./routes/watchlist";
-
-const PORT = process.env.PORT;
+import express, { json } from 'express';
+import authRoutes from './routes/auth.js';
+import watchlistRoutes from './routes/watchlist.js';
 const app = express();
-
-app.use(helmet());
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("Family Movie Watchlist API");
-});
-
-app.use("/api/watchlist", watchlistRoutes);
-
+const PORT = process.env.PORT || 3000;
+app.use(json());
+app.use('/api/auth', authRoutes);
+app.use('/api/watchlist', watchlistRoutes);
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}...`);
+  console.log(`Server is running on port ${PORT}`);
 });
+
+export default app;
